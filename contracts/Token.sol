@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 import "hardhat/console.sol";
 
@@ -8,10 +8,10 @@ contract Token {
     mapping(address => uint) public balances;
     mapping(address => mapping(address=>uint)) public allowances;
 
-    string public tokenName;
-    string public tokenSymbol;
-    uint public totalAmount;
-    uint8 public decimalsValue;
+    string private tokenName;
+    string private tokenSymbol;
+    uint private totalAmount;
+    uint8 private decimalsValue;
 
 
     event Transfer(address indexed _from, address indexed _to, uint _value);
@@ -42,8 +42,8 @@ contract Token {
         return totalAmount;
     }
 
-    function balanceOf(address _owner) public view returns(uint balance) {
-        balance = balances[_owner];
+    function balanceOf(address _owner) public view returns(uint) {
+        return balances[_owner];
     }
 
     function allowance(address _owner, address _spender) public view returns(uint remaining) {

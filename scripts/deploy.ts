@@ -1,18 +1,17 @@
 
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+//import { config } from "dotenv";
 import { ethers } from "hardhat";
+import { tokenName, tokenSymbol, initialSupply, decimals } from "../config";
+
 
 async function main() {
 
-  const tokenName = "CryptonAcademyToken";
-  const tokenSymbol = "CAT";
-  const initialSupply = 1000000;
-  const decimals = 10;
-
-
   const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy(tokenName, tokenSymbol, initialSupply, decimals);
+  const token = await Token.deploy(tokenName, tokenSymbol, ethers.utils.parseUnits(`${initialSupply/(10**decimals)}`, decimals), decimals);
+// !!!!здесь очень намудрил, Подскажи, пожалуйста, как сделать правильнее?
+
 
   await token.deployed();
 
