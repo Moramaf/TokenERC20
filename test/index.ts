@@ -83,4 +83,10 @@ describe("MyToken", function () {
     await expect(newToken.burn(owner.address, 1200000000)).to.be.revertedWith("not enough token!");
   });
 
+  it("Change an owner", async function () {
+    await newToken.changeOwner(addr2.address);
+    expect(await newToken.owner()).to.equal(addr2.address);
+  });
+
+
 });

@@ -12,6 +12,7 @@ contract Token {
     string private tokenSymbol;
     uint private totalAmount;
     uint8 private decimalsValue;
+    address public owner;
 
 
     event Transfer(address indexed _from, address indexed _to, uint _value);
@@ -23,7 +24,17 @@ contract Token {
         totalAmount = _initialSupply;
         balances[msg.sender] = _initialSupply;
         decimalsValue = _decimals;
+        owner = msg.sender;
         emit Transfer(address(0), msg.sender, _initialSupply);
+    }
+
+    modifier isOwner() {
+        require(msg.sender == owner, "not an owner");
+        _;
+    }
+
+    function changeOwner(address newOwner) public isOwner {
+        owner = newOwner;
     }
 
     function name() public view returns(string memory) {
@@ -74,14 +85,14 @@ contract Token {
         return true;
 
     }
-    function mint(address _account, uint _amount) public returns(bool success) {
+    function mint(address _account, uint _amount) public isOwner returns(bool success) {
         totalAmount += _amount;
         balances[_account] += _amount;
         emit Transfer(address(0), _account, _amount);
         return true;
     }
 
-    function burn(address _account, uint _amount) public returns(bool success) {
+    function burn(address _account, uint _amount) public isOwner returns(bool success) {
         require(_amount <= balances[_account], "not enough token!");
         totalAmount -= _amount;
         balances[_account] -= _amount;

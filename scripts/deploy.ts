@@ -9,8 +9,7 @@ import { tokenName, tokenSymbol, initialSupply, decimals } from "../config";
 async function main() {
 
   const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy(tokenName, tokenSymbol, ethers.utils.parseUnits(`${initialSupply/(10**decimals)}`, decimals), decimals);
-// !!!!здесь очень намудрил, Подскажи, пожалуйста, как сделать правильнее?
+  const token = await Token.deploy(tokenName, tokenSymbol, ethers.utils.parseUnits(`${initialSupply}`, decimals), decimals);
 
 
   await token.deployed();
